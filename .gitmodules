@@ -1,0 +1,3 @@
+[submodule "ansible-slurm"]
+	path = ansible-slurm
+	url = https://github.com/RonMcKay/ansible-slurm.git
