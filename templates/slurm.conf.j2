@@ -15,14 +15,19 @@ ControlMachine=localhost
 {% endif %}
 {% endfor %}
 
-# Nodes
-{% for i in slurm_nodes %}
-NodeName={{ i.name }}{% for k in i | sort if k != 'name' %} {{ k }}={{ 'YES' if i[k] is sameas true else ('NO' if i[k] is sameas false else i[k]) }}{% endfor %}
+## Nodes
+##{% for i in slurm_nodes %}
+##{ i }
+##{% if i == '' %}
+##NodeName=localhost State=UNKNOWN
+##{% endif %}
+##{% endfor %}
 
-{% else %}
-NodeName=localhost State=UNKNOWN
+#Nodes
+
+{% for host in ansible_play_hosts_all %}
+{{ hostvars[host].slurm_output.stdout_lines[1] | join('') }}
 {% endfor %}
-
 # Partitions
 {% for i in slurm_partitions %}
 PartitionName={{ i.name }}{% for k in i | sort if k != 'name' %} {{ k }}={{ 'YES' if i[k] is sameas true else ('NO' if i[k] is sameas false else i[k]) }}{% endfor %}
